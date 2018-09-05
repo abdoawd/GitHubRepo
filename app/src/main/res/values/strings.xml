@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GitHub Repo</string>
+    <string name="repo_name">Repo name</string>
+    <string name="repository_owner">Repo owner</string>
+    <string name="repo_desribtion">describtion</string>
+    <string name="connection_eror">oops check internet connection</string>
+    <string name="retry">Retry</string>
+</resources>

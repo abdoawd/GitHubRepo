@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_repo_name_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/repo_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_repo_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/tv_repo_name_lable"
+        app:layout_constraintTop_toTopOf="@id/tv_repo_name_lable" />
+
+    <TextView
+        android:id="@+id/tv_owner_lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/repository_owner"
+        app:layout_constraintStart_toEndOf="@id/tv_repo_name_lable"
+        app:layout_constraintTop_toBottomOf="@id/tv_repo_name_lable" />
+
+    <TextView
+        android:id="@+id/tv_repo_owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/tv_owner_lable"
+        app:layout_constraintTop_toTopOf="@id/tv_owner_lable" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_repo_describtion_lable"
+        android:text="@string/repo_desribtion"
+        app:layout_constraintTop_toBottomOf="@+id/tv_repo_owner"
+        app:layout_constraintStart_toEndOf="@+id/tv_repo_owner"/>
+
+    <TextView
+        android:id="@+id/tv_repo_describtion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/tv_repo_describtion_lable"
+        app:layout_constraintTop_toTopOf="@id/tv_repo_describtion_lable" />
+</android.support.constraint.ConstraintLayout>
