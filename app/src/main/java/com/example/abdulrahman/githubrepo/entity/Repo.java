@@ -29,7 +29,7 @@ public class Repo {
 
     private String pushed_at;
 
-    private String fork;
+    private boolean fork;
 
     private String svn_url;
 
@@ -144,7 +144,7 @@ public class Repo {
 
     public Repo(String has_issues, String teams_url, String compare_url, String releases_url, String keys_url, String has_pages,
                 String description, String milestones_url, String has_wiki, String events_url, String archive_url,
-                String subscribers_url, String contributors_url, String pushed_at, String fork, String svn_url,
+                String subscribers_url, String contributors_url, String pushed_at, boolean fork, String svn_url,
                 String collaborators_url, String subscription_url, String clone_url, String trees_url, String url,
                 String size, String notifications_url, String deployments_url, String updated_at, String branches_url,
                 Owner owner, String issue_events_url, String language, String forks_count, String contents_url,
@@ -284,7 +284,7 @@ public class Repo {
         return pushed_at;
     }
 
-    public String getFork() {
+    public boolean getFork() {
         return fork;
     }
 

@@ -14,10 +14,10 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @GET("square/repos?access_token=3880f0116c026876f8c3117ddb43c8748e521344")
-    Call<List<Repo>> getMainCategories();
+    @GET("square/repos")
+    Call<List<Repo>> getAllRepos();
+//    https://api.github.com/user/repos?page=2&per_page=100
 
-    @GET("GetCategories")
-    Call<List<String>> getSubCategories(@Query("categoryId") int categoryId, @Query("countryId") int countryId);
-
+    @GET("square/repos?page=2&per_page=100")
+    Call<List<Repo>> getScheduledRepos();
 }

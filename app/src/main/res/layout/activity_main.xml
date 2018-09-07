@@ -5,17 +5,19 @@
     android:id="@+id/container_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.view.MainActivity">
+    tools:context=".ui.home.view.MainActivity"
+    android:background="@color/darkGrey">
 
     <ProgressBar
         android:id="@+id/progressBar_main"
-        style="?android:attr/progressBarStyleLarge"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_main"

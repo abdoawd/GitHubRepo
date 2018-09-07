@@ -1,7 +1,10 @@
 package com.example.abdulrahman.githubrepo.ui.home.view;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +26,12 @@ import butterknife.ButterKnife;
 
 public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> {
 
+    private MainActivity activity;
     private List<Repo> items;
 
-    public ReposAdapter() {
+    public ReposAdapter(MainActivity activity) {
         items = new ArrayList<>();
+        this.activity = activity;
     }
 
 
@@ -43,6 +48,12 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
         holder.tvRepoDescribtion.setText(repo.getDescription());
         holder.tvRepoNAme.setText(repo.getFull_name());
         holder.tvRepoOwner.setText(repo.getName());
+        if (repo.getFork()) {
+            holder.layout.setBackgroundColor(Color.WHITE);
+        } else {
+            holder.layout.setBackgroundColor(Color.GREEN);
+
+        }
 
     }
 
@@ -57,7 +68,7 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         @BindView(R.id.tv_repo_name)
         TextView tvRepoNAme;
 
@@ -66,18 +77,23 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
 
         @BindView(R.id.tv_repo_describtion)
         TextView tvRepoDescribtion;
+        @BindView(R.id.row_constraint)
+        ConstraintLayout layout;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
 
+
+
         @Override
-        public void onClick(View v) {
-
-
+        public boolean onLongClick(View v) {
+            activity.showAlertDialogButtonClicked(items.get(getAdapterPosition()).getHtml_url(),
+                    items.get(getAdapterPosition()).getOwner().getHtml_url());
+            return false;
         }
     }
 }
