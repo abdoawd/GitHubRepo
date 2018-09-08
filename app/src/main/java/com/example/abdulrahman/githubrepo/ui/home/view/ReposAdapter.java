@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +90,7 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.ViewHolder> 
 
         @Override
         public boolean onLongClick(View v) {
-            activity.showAlertDialogButtonClicked(items.get(getAdapterPosition()).getHtml_url(),
+            activity.showDialog(items.get(getAdapterPosition()).getHtml_url(),
                     items.get(getAdapterPosition()).getOwner().getHtml_url());
             return false;
         }

@@ -67,6 +67,33 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override
+    public void refreshDataInRecycler(final RefreshReposCallback refreshReposCallback) {
+        call = ApiClient.getApiService().getAllRepos();
+        call.enqueue(new Callback<List<Repo>>() {
+            @Override
+            public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
+
+                if (response.isSuccessful()) {
+                    refreshReposCallback.onRefreshedSuccess(response.body());
+                    dataSource.clearCachedData();
+                    dataSource.CachRepotoDB(response.body());
+                } else {
+
+                    refreshReposCallback.onRefreshedRepoFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Repo>> call, Throwable t) {
+                Log.d(t.getMessage(), "failure");
+                Log.d("failure", t.getMessage());
+                refreshReposCallback.onRefreshedRepoFailure();
+            }
+        });
+
+    }
+
+    @Override
     public void udateCachedRepo(final UpdateCachedRepoCalback callback) {
         call = ApiClient.getApiService().getAllRepos();
         call.enqueue(new Callback<List<Repo>>() {

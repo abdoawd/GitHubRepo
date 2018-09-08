@@ -18,7 +18,6 @@ public class MyService extends Service implements HomeModel.UpdateCachedRepoCalb
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -35,7 +34,6 @@ public class MyService extends Service implements HomeModel.UpdateCachedRepoCalb
 
     @Override
     public void onDestroy() {
-        // TODO Auto-generated method stub
         Toast.makeText(this, "Servics Stopped", Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
@@ -48,15 +46,15 @@ public class MyService extends Service implements HomeModel.UpdateCachedRepoCalb
         // Build notification
         // Actions are just fake
         Notification noti = new Notification.Builder(this)
-                .setContentTitle("New mail from " + "test@gmail.com")
-                .setContentText("Subject").setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle("Check Refresh data from githup")
+                .setContentText("Refresh data")
+                .setSmallIcon(R.drawable.notification_icon)
                 .setContentIntent(pIntent)
                 .addAction(R.drawable.notification_icon, "And more", pIntent).build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         // hide the notification after its selected
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(0, noti);
-
     }
 
     @Override

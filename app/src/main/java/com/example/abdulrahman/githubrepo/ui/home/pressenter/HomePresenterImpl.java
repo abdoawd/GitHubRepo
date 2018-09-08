@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 
-public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedReposCallback,HomeModel.GetOnlineReposCallback {
+public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedReposCallback,HomeModel.GetOnlineReposCallback,HomeModel.RefreshReposCallback {
     private HomeModel model;
     private WeakReference<HomeView> viewReference;
     public HomePresenterImpl(HomeView viewReference) {
@@ -40,6 +40,11 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedRepo
         model.cancelRequest();
         viewReference.clear();
         viewReference = null;
+    }
+
+    @Override
+    public void onRefreshSwiped() {
+        model.refreshDataInRecycler(this);
     }
 
     private void getRepos() {
@@ -91,6 +96,17 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedRepo
 
     @Override
     public void onGettingCachedRepoFailure() {
+
+    }
+
+    @Override
+    public void onRefreshedSuccess(List<Repo> list) {
+        getView().dismisRefresher();
+        getView().setListItems(list);
+
+    }
+    @Override
+    public void onRefreshedRepoFailure() {
 
     }
 }

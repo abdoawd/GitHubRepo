@@ -16,6 +16,8 @@ public interface HomeModel {
 
     void getCachedRepo(GetCachedReposCallback callback);
 
+    void refreshDataInRecycler(RefreshReposCallback refreshReposCallback);
+
     interface GetOnlineReposCallback {
         void onGettingOnlineRepoSuccess(List<Repo> list);
         void onGettingOnlineRepoFailure();
@@ -31,5 +33,9 @@ public interface HomeModel {
         void onUpdatingCachedSuccess();
 
         void onUpdatingCachedFailure();
+    }
+    interface RefreshReposCallback {
+        void onRefreshedSuccess(List<Repo> list);
+        void onRefreshedRepoFailure();
     }
 }

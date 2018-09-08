@@ -34,24 +34,18 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements HomeView, ProviderInstaller.ProviderInstallListener,
         SwipeRefreshLayout.OnRefreshListener {
-    private int errorCode = 0;
-    private int ERROR_DIALOG_REQUEST_CODE = 1;
-
     @BindView(R.id.progressBar_main)
     ProgressBar progressBar;
-
     @BindView(R.id.recycler_main)
     RecyclerView recyclerView;
-
-
     @BindView(R.id.container_main)
     ConstraintLayout constraintLayout;
-
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout swipeRefreshLayout;
-
     ReposAdapter adapter;
     CachedRepoAdapter cachedRepoAdapter;
+    private int errorCode = 0;
+    private int ERROR_DIALOG_REQUEST_CODE = 1;
     private HomePresenterImpl presenter;
 
 
@@ -83,15 +77,7 @@ public class MainActivity extends AppCompatActivity implements HomeView, Provide
     }
 
     private void addDataToList() {
-        progressBar.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i <= 300; i++) {
-                }
-                progressBar.setVisibility(View.GONE);
-            }
-        }, 1500);
+        presenter.init();
     }
 
     @Override
@@ -100,16 +86,9 @@ public class MainActivity extends AppCompatActivity implements HomeView, Provide
                 .setAction(R.string.retry, onClickListener)
                 .show();
     }
-    public void startService() {
-        startService(new Intent(this, MyService.class));
-        Calendar cal = Calendar.getInstance();
-        Intent intent = new Intent(this, MyService.class);
-        PendingIntent pintent = PendingIntent
-                .getService(this, 0, intent, 0);
-        AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        // Start service every hour
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
-                3600 * 1000, pintent);
+    @Override
+    public void onRefresh() {
+        presenter.onRefreshSwiped();
     }
 
     @Override
@@ -124,7 +103,12 @@ public class MainActivity extends AppCompatActivity implements HomeView, Provide
         recyclerView.setAdapter(cachedRepoAdapter);
     }
 
-    public void showAlertDialogButtonClicked(final String repoHtml, final String repoOwnerHtl) {
+    @Override
+    public void dismisRefresher() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void showDialog(final String repoHtml, final String repoOwnerHtl) {
 
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -165,6 +149,18 @@ public class MainActivity extends AppCompatActivity implements HomeView, Provide
 
     }
 
+    public void startService() {
+        startService(new Intent(this, MyService.class));
+        Calendar cal = Calendar.getInstance();
+        Intent intent = new Intent(this, MyService.class);
+        PendingIntent pintent = PendingIntent
+                .getService(this, 0, intent, 0);
+        AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        // Start service every hour
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                3600 * 1000, pintent);
+    }
+
     // coming implmented methods to slove problem with ssl forced me on android <4.4
     @Override
     public void onProviderInstalled() {
@@ -197,9 +193,5 @@ public class MainActivity extends AppCompatActivity implements HomeView, Provide
 
     }
 
-    @Override
-    public void onRefresh() {
-        Snackbar.make(constraintLayout, R.string.swipeRefre, Snackbar.LENGTH_LONG).show();
-        swipeRefreshLayout.setRefreshing(false);
-    }
+
 }

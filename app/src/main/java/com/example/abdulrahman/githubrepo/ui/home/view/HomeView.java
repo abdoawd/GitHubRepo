@@ -19,4 +19,6 @@ public interface HomeView {
 
 
     void setCachedList(List<CachedRepoModel> list);
+
+    void dismisRefresher();
 }

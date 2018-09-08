@@ -9,4 +9,5 @@ public interface HomePresenter {
 
     void clear();
 
+    void onRefreshSwiped();
 }
