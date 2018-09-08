@@ -5,4 +5,5 @@
     <string name="repo_desribtion">describtion : </string>
     <string name="connection_eror"> oops check internet connection</string>
     <string name="retry">Retry</string>
+    <string name="swipeRefre">hello from swiperefresherlayout</string>
 </resources>

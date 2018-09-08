@@ -1,5 +1,6 @@
 package com.example.abdulrahman.githubrepo.ui.home.model;
 
+import com.example.abdulrahman.githubrepo.db.CachedRepoModel;
 import com.example.abdulrahman.githubrepo.entity.Repo;
 
 import java.util.List;
@@ -9,13 +10,26 @@ import java.util.List;
  */
 
 public interface HomeModel {
-    void getCategoriesList(GetCategoriesCallback callback);
+    void getReposOnlineList(GetOnlineReposCallback callback);
 
-    void cancelCategoriesRequest();
+    void cancelRequest();
 
-    interface GetCategoriesCallback {
-        void onGettingCategoriesSuccess(List<Repo> categories);
+    void getCachedRepo(GetCachedReposCallback callback);
 
-        void onGettingCategoriesFailure();
+    interface GetOnlineReposCallback {
+        void onGettingOnlineRepoSuccess(List<Repo> list);
+        void onGettingOnlineRepoFailure();
+    }
+
+    interface GetCachedReposCallback {
+        void onGettingCachedRepoSuccess(List<CachedRepoModel> list);
+
+        void onGettingCachedRepoFailure();
+    }
+    void udateCachedRepo(UpdateCachedRepoCalback updateCachedRepoCalback);
+    interface UpdateCachedRepoCalback {
+        void onUpdatingCachedSuccess();
+
+        void onUpdatingCachedFailure();
     }
 }

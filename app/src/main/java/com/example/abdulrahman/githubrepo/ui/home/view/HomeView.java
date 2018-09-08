@@ -2,6 +2,7 @@ package com.example.abdulrahman.githubrepo.ui.home.view;
 
 import android.view.View;
 
+import com.example.abdulrahman.githubrepo.db.CachedRepoModel;
 import com.example.abdulrahman.githubrepo.entity.Repo;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface HomeView {
 
     void showProgressBar();
 
+
+    void setCachedList(List<CachedRepoModel> list);
 }

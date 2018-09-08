@@ -8,4 +8,5 @@ public interface HomePresenter {
     void init();
 
     void clear();
+
 }

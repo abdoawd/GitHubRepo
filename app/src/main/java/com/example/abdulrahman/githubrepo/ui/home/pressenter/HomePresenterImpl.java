@@ -2,19 +2,19 @@ package com.example.abdulrahman.githubrepo.ui.home.pressenter;
 
 import android.view.View;
 
+import com.example.abdulrahman.githubrepo.db.CachedRepoModel;
 import com.example.abdulrahman.githubrepo.entity.Repo;
 import com.example.abdulrahman.githubrepo.ui.home.model.HomeModel;
 import com.example.abdulrahman.githubrepo.ui.home.model.HomeModelImpl;
 import com.example.abdulrahman.githubrepo.ui.home.view.HomeView;
-
+import com.example.abdulrahman.githubrepo.utils.NetworkUtils;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 
-public class HomePresenterImpl implements HomePresenter, HomeModel.GetCategoriesCallback {
+public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedReposCallback,HomeModel.GetOnlineReposCallback {
     private HomeModel model;
     private WeakReference<HomeView> viewReference;
-
     public HomePresenterImpl(HomeView viewReference) {
         this.viewReference = new WeakReference<>(viewReference);
         model = new HomeModelImpl();
@@ -22,23 +22,35 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCategories
 
     @Override
     public void init() {
-        getCategories();
+        if (NetworkUtils.isOnline()){
+            getRepos();
+        }
+        else {
+            getCachedRepos();
+        }
     }
 
-    private void getCategories() {
+    private void getCachedRepos() {
         getView().showProgressBar();
-        model.getCategoriesList(this);
+        model.getCachedRepo(this);
     }
 
     @Override
     public void clear() {
-        model.cancelCategoriesRequest();
+        model.cancelRequest();
         viewReference.clear();
         viewReference = null;
     }
 
+    private void getRepos() {
+        getView().showProgressBar();
+        model.getReposOnlineList(this);
+    }
+
+
+
     @Override
-    public void onGettingCategoriesSuccess(List<Repo> repos) {
+    public void onGettingOnlineRepoSuccess(List<Repo> repos) {
         if (isViewCleared())
             return;
         getView().hideProgressBar();
@@ -50,7 +62,7 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCategories
     }
 
     @Override
-    public void onGettingCategoriesFailure() {
+    public void onGettingOnlineRepoFailure() {
         if (isViewCleared())
             return;
         getView().hideProgressBar();
@@ -61,12 +73,24 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCategories
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getCategories();
+                getRepos();
             }
         };
     }
 
     private HomeView getView() {
         return viewReference.get();
+    }
+
+    @Override
+    public void onGettingCachedRepoSuccess(List<CachedRepoModel> list) {
+        getView().hideProgressBar();
+        getView().setCachedList(list);
+
+    }
+
+    @Override
+    public void onGettingCachedRepoFailure() {
+
     }
 }
