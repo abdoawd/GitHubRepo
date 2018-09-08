@@ -5,7 +5,7 @@ package com.example.abdulrahman.githubrepo.ui.home.pressenter;
  */
 
 public interface HomePresenter {
-    void init();
+    void init(int startPage,int endPage);
 
     void clear();
 

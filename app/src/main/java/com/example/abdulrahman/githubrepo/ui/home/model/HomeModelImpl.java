@@ -8,6 +8,7 @@ import com.example.abdulrahman.githubrepo.db.CachedRepoDataSource;
 import com.example.abdulrahman.githubrepo.db.CachedRepoModel;
 import com.example.abdulrahman.githubrepo.entity.Repo;
 import com.example.abdulrahman.githubrepo.network.ApiClient;
+import com.example.abdulrahman.githubrepo.network.Constants;
 
 import java.util.List;
 
@@ -23,13 +24,14 @@ public class HomeModelImpl implements HomeModel {
     private List<CachedRepoModel> list;
 
     @Override
-    public void getReposOnlineList(final GetOnlineReposCallback callback) {
-        call = ApiClient.getApiService().getAllRepos();
+    public void getReposOnlineList(final GetOnlineReposCallback callback,int startPage,int endPage) {
+        call = ApiClient.getApiService().getScheduledRepos(startPage,endPage, Constants.ACCESS_TOKEN);
         call.enqueue(new Callback<List<Repo>>() {
             @Override
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
 
                 if (response.isSuccessful()) {
+                    int i =response.body().size();
                     callback.onGettingOnlineRepoSuccess(response.body());
                     dataSource.clearCachedData();
                     dataSource.CachRepotoDB(response.body());
@@ -68,7 +70,7 @@ public class HomeModelImpl implements HomeModel {
 
     @Override
     public void refreshDataInRecycler(final RefreshReposCallback refreshReposCallback) {
-        call = ApiClient.getApiService().getAllRepos();
+        call = ApiClient.getApiService().getAllRepos(Constants.ACCESS_TOKEN);
         call.enqueue(new Callback<List<Repo>>() {
             @Override
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
@@ -95,7 +97,7 @@ public class HomeModelImpl implements HomeModel {
 
     @Override
     public void udateCachedRepo(final UpdateCachedRepoCalback callback) {
-        call = ApiClient.getApiService().getAllRepos();
+        call = ApiClient.getApiService().getAllRepos(Constants.ACCESS_TOKEN);
         call.enqueue(new Callback<List<Repo>>() {
             @Override
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {

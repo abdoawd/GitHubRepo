@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface HomeModel {
-    void getReposOnlineList(GetOnlineReposCallback callback);
+    void getReposOnlineList(GetOnlineReposCallback callback,int startPage,int endPage);
 
     void cancelRequest();
 

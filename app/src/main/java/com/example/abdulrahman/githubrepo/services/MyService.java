@@ -1,9 +1,11 @@
 package com.example.abdulrahman.githubrepo.services;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
@@ -12,6 +14,8 @@ import com.example.abdulrahman.githubrepo.R;
 import com.example.abdulrahman.githubrepo.ui.home.model.HomeModel;
 import com.example.abdulrahman.githubrepo.ui.home.model.HomeModelImpl;
 import com.example.abdulrahman.githubrepo.ui.home.view.MainActivity;
+
+import java.util.Calendar;
 
 public class MyService extends Service implements HomeModel.UpdateCachedRepoCalback {
     private HomeModel model;
@@ -28,6 +32,14 @@ public class MyService extends Service implements HomeModel.UpdateCachedRepoCalb
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Calendar cal = Calendar.getInstance();
+        Intent intentt = new Intent(this, MyService.class);
+        PendingIntent pintent = PendingIntent
+                .getService(this, 0, intentt, 0);
+        AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        // Start service every hour
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                3600 * 1000, pintent);
         model.udateCachedRepo(this);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -40,6 +52,7 @@ public class MyService extends Service implements HomeModel.UpdateCachedRepoCalb
 
     @Override
     public void onUpdatingCachedSuccess() {
+
         Intent intentt = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intentt, 0);
 

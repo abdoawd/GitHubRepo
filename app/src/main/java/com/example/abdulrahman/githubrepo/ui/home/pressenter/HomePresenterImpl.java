@@ -21,9 +21,9 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedRepo
     }
 
     @Override
-    public void init() {
+    public void init(int startPage,int endPage) {
         if (NetworkUtils.isOnline()){
-            getRepos();
+            getRepos(startPage,endPage);
         }
         else {
             getCachedRepos();
@@ -47,9 +47,9 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedRepo
         model.refreshDataInRecycler(this);
     }
 
-    private void getRepos() {
+    private void getRepos(int startPage,int endPage) {
         getView().showProgressBar();
-        model.getReposOnlineList(this);
+        model.getReposOnlineList(this, startPage, endPage);
     }
 
 
@@ -78,7 +78,7 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedRepo
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRepos();
+                getRepos(0, 10);
             }
         };
     }
@@ -107,6 +107,8 @@ public class HomePresenterImpl implements HomePresenter, HomeModel.GetCachedRepo
     }
     @Override
     public void onRefreshedRepoFailure() {
+        getView().dismisRefresher();
+        getView().showConnectionError(onRetryBtnClicked());
 
     }
 }

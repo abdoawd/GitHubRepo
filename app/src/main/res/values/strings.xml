@@ -3,7 +3,7 @@
     <string name="repo_name">Repo name : </string>
     <string name="repository_owner">Repo owner : </string>
     <string name="repo_desribtion">describtion : </string>
-    <string name="connection_eror"> oops check internet connection</string>
+    <string name="connection_eror"> oops check internet connection or unvalid access token</string>
     <string name="retry">Retry</string>
     <string name="swipeRefre">hello from swiperefresherlayout</string>
 </resources>
